@@ -1,0 +1,46 @@
+{
+  "name": "awesome-claude-code",
+  "owner": {
+    "name": "Javier Martinez",
+    "email": "javiermrcom@gmail.com",
+    "url": "https://github.com/javiermrcom"
+  },
+  "metadata": {
+    "description": "Curated collection of production-ready Claude Code components and plugins",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "git-guardian",
+      "source": "./",
+      "description": "Complete Git workflow automation with safety guardrails",
+      "version": "1.0.0",
+      "commands": [
+        "./commands/commit.md",
+        "./commands/pr.md",
+        "./commands/branch-name.md",
+        "./commands/git-status.md"
+      ],
+      "agents": [
+        "./agents/reviewer.md"
+      ],
+      "mcpServers": [
+        "./mcps/linear.json",
+        "./mcps/sentry.json"
+      ],
+      "hooks": {
+        "PreToolUse": [
+          {
+            "matcher": "Bash",
+            "hooks": [
+              {
+                "type": "command",
+                "command": "./hooks/git_safety.py"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

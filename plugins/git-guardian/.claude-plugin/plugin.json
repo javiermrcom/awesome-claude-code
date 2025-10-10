@@ -1,0 +1,72 @@
+{
+  "name": "git-guardian",
+  "version": "1.0.0",
+  "description": "Safe, intelligent Git workflow for AI-assisted coding with enterprise-grade safety guardrails",
+  "author": {
+    "name": "Javier Martinez",
+    "email": "javiermrcom@gmail.com",
+    "url": "https://github.com/javiermrcom"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/javiermrcom/awesome-claude-code"
+  },
+  "license": "MIT",
+  "keywords": [
+    "git",
+    "safety",
+    "workflow",
+    "commits",
+    "pull-requests",
+    "conventional-commits",
+    "linear",
+    "sentry",
+    "security",
+    "guardrails"
+  ],
+  "components": {
+    "commands": [
+      "../../commands/commit.md",
+      "../../commands/pr.md",
+      "../../commands/branch-name.md",
+      "../../commands/git-status.md"
+    ],
+    "agents": [
+      "../../agents/reviewer.md"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "../../hooks/git_safety.py"
+          }
+        ]
+      }
+    ]
+  },
+  "requirements": {
+    "claude_code": ">=0.9.0",
+    "python": ">=3.8",
+    "git": ">=2.0.0"
+  },
+  "features": [
+    "Intelligent commit creation with Conventional Commits format",
+    "Smart PR generation with Linear and Sentry integration",
+    "Auto-detecting branch name suggestions",
+    "Enhanced git status with actionable recommendations",
+    "Security hook preventing dangerous Git operations",
+    "Comprehensive code review before commits",
+    "Linear issue and Sentry error auto-detection",
+    "Developer-agnostic workflows (auto-detects git config)"
+  ],
+  "tags": [
+    "git-workflow",
+    "safety",
+    "productivity",
+    "integration"
+  ]
+}
