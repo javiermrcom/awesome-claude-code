@@ -1,9 +1,0 @@
-{
-  "mcpServers": {
-    "sentry": {
-      "description": "Sentry error tracking integration for monitoring and debugging production issues",
-      "transport": "http",
-      "url": "https://mcp.sentry.dev/mcp"
-    }
-  }
-}
