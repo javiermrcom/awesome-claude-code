@@ -12,7 +12,10 @@ This is a **curated collection of production-ready Claude Code plugins and resou
 
 ```
 awesome-claude-code/
-├── plugins/                    # Installable plugins
+├── .claude-plugin/
+│   └── marketplace.json        # Marketplace configuration
+│
+├── plugins/                    # Production-ready plugins
 │   └── git-guardian/          # Git workflow automation
 │       ├── .claude-plugin/
 │       │   └── plugin.json    # Plugin metadata
@@ -21,9 +24,6 @@ awesome-claude-code/
 │       ├── hooks/             # Security hooks
 │       ├── README.md
 │       └── CHANGELOG.md
-│
-├── examples/                   # Usage examples & patterns
-│   └── workflows/
 │
 └── README.md                   # Main documentation
 ```
@@ -50,13 +50,12 @@ Claude Code will automatically:
 - Make hooks executable
 - Register the plugin
 
-### Browsing Resources
+### Learning & Customization
 
 Users can also:
-- Browse the source code to learn patterns
-- Copy individual components if they prefer manual installation
+- Browse plugin source code to learn patterns
 - Fork and customize plugins for their needs
-- Use examples as templates for their own plugins
+- Use plugins as templates for their own creations
 
 ## Available Plugins
 
@@ -74,15 +73,15 @@ Users can also:
 
 **Installation:**
 ```bash
-claude-code plugin install awesome-claude-code/plugins/git-guardian
+/plugin install git-guardian@awesome-claude-code
 ```
 
 **Components:**
 - Commands: `/commit`, `/pr`, `/branch-name`, `/git-status`
-- Hooks: `pre_tool_use.py` (security guardrails)
 - Agents: `reviewer` (code review)
+- Hooks: `pre_tool_use.py` (security guardrails)
 
-See: `plugins/git-guardian/README.md`
+**Documentation:** [plugins/git-guardian/README.md](plugins/git-guardian/README.md)
 
 ## Development Guidelines
 
@@ -132,7 +131,7 @@ When adding a new plugin to this collection:
 
 #### Commands (Slash Commands)
 - File format: `command-name.md`
-- Location: `plugins/{name}/commands/`
+- Location: `plugins/{plugin-name}/commands/`
 - Must include frontmatter:
   ```yaml
   ---
@@ -147,22 +146,27 @@ When adding a new plugin to this collection:
 
 #### Agents (Subagents)
 - File format: `agent-name.md`
-- Location: `plugins/{name}/agents/`
+- Location: `plugins/{plugin-name}/agents/`
 - Must include frontmatter with `allowed-tools` and clear task description
 - Agents analyze, main Claude executes
 
 #### Hooks
+- Location: `plugins/{plugin-name}/hooks/`
 - Configuration: Define in `plugin.json` under `"hooks"` key
-- Scripts: Python/shell scripts referenced by the hooks configuration
+- Scripts: Python/shell scripts
 - Must be executable (chmod +x)
 - Available events: `PreToolUse`, `PostToolUse`, `UserPromptSubmit`, etc.
 - Must fail open (exit 0 on errors, don't block Claude)
+- Use `${CLAUDE_PLUGIN_ROOT}` for plugin-relative paths
 - Example in `plugin.json`:
   ```json
   "hooks": {
     "PreToolUse": [{
-      "matcher": ".*",
-      "hooks": [{"type": "command", "command": "../../hooks/pre_tool_use.py"}]
+      "matcher": "Bash",
+      "hooks": [{
+        "type": "command",
+        "command": "${CLAUDE_PLUGIN_ROOT}/hooks/pre_tool_use.py"
+      }]
     }]
   }
   ```
@@ -172,16 +176,21 @@ When adding a new plugin to this collection:
 Before adding to the collection:
 
 ```bash
-# Test plugin installation
-claude-code plugin install plugins/your-plugin
+# Test plugin installation locally
+/plugin install /path/to/plugins/your-plugin
 
 # Verify components are installed
 ls -la ~/.claude/commands/
 ls -la ~/.claude/agents/
 ls -la ~/.claude/hooks/
 
-# Test functionality
-# Try using the commands, agents, hooks in Claude Code
+# Test functionality in Claude Code
+# Try using the commands, agents, and verify hooks work correctly
+
+# Clean up after testing
+rm ~/.claude/commands/your-command.md
+rm ~/.claude/agents/your-agent.md
+rm ~/.claude/hooks/your-hook.py
 ```
 
 ## Key Patterns & Best Practices
