@@ -2,10 +2,10 @@
 
 This document provides real-world workflow examples using Git Guardian.
 
-## Example 1: Feature Development with Linear
+## Example 1: Basic Feature Development
 
 ### Scenario
-You're working on Linear issue IA-456 to add payment integration.
+You're adding a new payment integration feature.
 
 ### Workflow
 
@@ -19,8 +19,8 @@ You're working on Linear issue IA-456 to add payment integration.
 # - Status: clean
 # - Upstream: in sync
 
-# 2. Mention the Linear issue in conversation
-"I'm working on IA-456 to add Stripe payment integration"
+# 2. Describe what you're working on
+"I'm adding Stripe payment integration to the checkout flow"
 
 # 3. Make your code changes
 # ... edit files ...
@@ -33,7 +33,7 @@ You're working on Linear issue IA-456 to add payment integration.
 # 5. Create branch with suggested name
 git checkout -b feat/jmr/add-stripe-payment-integration
 
-# 6. Create intelligent commit (auto-detects IA-456)
+# 6. Create intelligent commit
 /commit
 
 # Output:
@@ -46,13 +46,100 @@ git checkout -b feat/jmr/add-stripe-payment-integration
 # - Add Stripe API client wrapper
 # - Add comprehensive unit tests
 # - Update README with setup instructions
-#
-# Refs: IA-456
 
 # 7. Push to remote
 git push -u origin feat/jmr/add-stripe-payment-integration
 
-# 8. Create pull request (auto-links Linear issue)
+# 8. Create pull request
+/pr --labels "feature,backend"
+
+# Output:
+# PR created: https://github.com/org/repo/pull/123
+# Title: feat: add stripe payment integration
+```
+
+---
+
+## Example 2: Basic Bug Fix
+
+### Scenario
+Users are experiencing timeout errors in the payment flow.
+
+### Workflow
+
+```bash
+# 1. Describe the issue
+"Users are experiencing timeout errors when processing payments"
+
+# 2. Check repository state
+/git-status
+
+# 3. Make the fix
+# ... add timeout handling ...
+
+# 4. Get branch name
+/branch-name
+
+# Output: fix/jmr/handle-payment-timeout
+
+# 5. Create branch
+git checkout -b fix/jmr/handle-payment-timeout
+
+# 6. Commit the fix
+/commit
+
+# Output:
+# Commit created:
+# fix: handle timeout errors in payment flow
+#
+# - Add retry logic for network requests
+# - Increase timeout to 30 seconds
+# - Add user-friendly error message
+# - Add test for timeout scenario
+
+# 7. Create PR
+/pr --labels "bug,urgent"
+```
+
+---
+
+## Example 3: Feature Development with Linear (Optional MCP)
+
+### Scenario
+You're working on Linear issue IA-456 to add payment integration.
+
+### Workflow
+
+```bash
+# 1. Mention the Linear issue in conversation
+"I'm working on IA-456 to add Stripe payment integration"
+
+# 2. Make your code changes
+# ... edit files ...
+
+# 3. Get branch name suggestion
+/branch-name
+
+# Output: feat/jmr/add-stripe-payment-integration
+
+# 4. Create branch
+git checkout -b feat/jmr/add-stripe-payment-integration
+
+# 5. Create intelligent commit (auto-detects IA-456)
+/commit
+
+# Output:
+# Commit created:
+# feat: add stripe payment integration
+#
+# - Implement PaymentService class
+# - Add Stripe API client wrapper
+# - Add comprehensive unit tests
+# - Update README with setup instructions
+#
+# Refs: IA-456
+
+# 6. Create pull request (auto-links Linear issue)
 /pr --labels "feature,backend"
 
 # Output:
@@ -63,7 +150,7 @@ git push -u origin feat/jmr/add-stripe-payment-integration
 
 ---
 
-## Example 2: Bug Fix with Sentry
+## Example 4: Bug Fix with Sentry (Optional MCP)
 
 ### Scenario
 Sentry reported error SENTRY-456 about null user object in payment flow.
@@ -74,21 +161,10 @@ Sentry reported error SENTRY-456 about null user object in payment flow.
 # 1. Mention Sentry error in conversation
 "Investigating Sentry error SENTRY-456 about null user in payment service"
 
-# 2. Check repository state
-/git-status
-
-# 3. Make the fix
+# 2. Make the fix
 # ... add null checks ...
 
-# 4. Get branch name
-/branch-name
-
-# Output: fix/jmr/handle-null-user-payment
-
-# 5. Create branch
-git checkout -b fix/jmr/handle-null-user-payment
-
-# 6. Commit with auto Sentry reference
+# 3. Commit with auto Sentry reference
 /commit
 
 # Output:
@@ -102,13 +178,13 @@ git checkout -b fix/jmr/handle-null-user-payment
 #
 # Fixes: SENTRY-456
 
-# 7. Create PR
+# 4. Create PR
 /pr --labels "bug,urgent"
 ```
 
 ---
 
-## Example 3: Combined Linear + Sentry
+## Example 5: Combined Linear + Sentry (Optional MCPs)
 
 ### Scenario
 Working on Linear issue IA-789 that also fixes Sentry error SENTRY-789.
@@ -140,7 +216,7 @@ Working on Linear issue IA-789 that also fixes Sentry error SENTRY-789.
 
 ---
 
-## Example 4: Protected Operations
+## Example 6: Protected Operations
 
 ### Scenario
 Accidentally trying to push to main branch.
@@ -168,7 +244,7 @@ git push origin feat/jmr/new-feature  # ✅ Allowed
 
 ---
 
-## Example 5: Breaking Changes
+## Example 7: Breaking Changes
 
 ### Scenario
 Refactoring API that introduces breaking changes.
@@ -200,7 +276,7 @@ Refactoring API that introduces breaking changes.
 
 ---
 
-## Example 6: Dry Run Mode
+## Example 8: Dry Run Mode
 
 ### Scenario
 Preview what will be committed before executing.
@@ -241,7 +317,7 @@ Preview what will be committed before executing.
 
 ---
 
-## Example 7: Multiple Commits
+## Example 9: Multiple Commits
 
 ### Scenario
 Changes span multiple logical units.
@@ -267,7 +343,7 @@ Changes span multiple logical units.
 
 ---
 
-## Example 8: Status-Driven Workflow
+## Example 10: Status-Driven Workflow
 
 ### Scenario
 Using /git-status to guide your workflow.

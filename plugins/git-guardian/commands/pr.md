@@ -1,5 +1,5 @@
 ---
-allowed-tools: Bash(/usr/bin/git:*), Bash(gh:*), Task, WebSearch, mcp__linear__get_issue, mcp__linear__list_issues
+allowed-tools: Bash(/usr/bin/git:*), Bash(gh:*), Task, WebSearch
 description: Create a GitHub pull request with intelligent title and description generation
 arguments:
   - name: branch

@@ -49,6 +49,41 @@ cp agents/* ~/.claude/agents/
 chmod +x ~/.claude/hooks/pre_tool_use.py
 ```
 
+### Optional MCP Configuration
+
+For enhanced Linear and Sentry integrations, configure MCPs in `~/.claude/mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "linear": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-linear"],
+      "env": {
+        "LINEAR_API_KEY": "your-linear-api-key"
+      }
+    },
+    "sentry": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-sentry"],
+      "env": {
+        "SENTRY_AUTH_TOKEN": "your-sentry-auth-token"
+      }
+    }
+  }
+}
+```
+
+**Without MCP configuration:**
+- Commands work normally
+- No automatic Linear/Sentry linking
+- Manual issue references still work in commit messages
+
+**With MCP configuration:**
+- Auto-detection of Linear issues from conversation
+- Auto-linking in commits and PRs
+- Rich context from Linear/Sentry in PR descriptions
+
 ---
 
 ## Components
@@ -358,10 +393,17 @@ git config user.email "javi.martinez@company.com"
 
 ## Requirements
 
+### Required
 - **Claude Code:** >= 0.9.0
 - **Python:** >= 3.8 (for security hook)
 - **Git:** >= 2.0.0
-- **GitHub CLI:** Optional (for `/pr` command)
+
+### Optional
+- **GitHub CLI (`gh`):** Required for `/pr` command
+- **Linear MCP:** Enables auto-detection and linking of Linear issues in commits and PRs
+- **Sentry MCP:** Enables auto-detection and linking of Sentry errors in commits
+
+**Note:** All commands work without MCP servers configured. Linear and Sentry integrations gracefully degrade when MCPs are not available.
 
 ---
 
